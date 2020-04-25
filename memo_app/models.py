@@ -7,5 +7,8 @@ class Memo(models.Model):
     update_datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'id=' + str(self.id) + ',update_datetime' 
+        """
+        下記は"http://127.0.0.1:8001/admin/memo_app/memo/"の画面に反映される。
+        """
+        return 'id:' + str(self.id) + ',更新日時' 
         + str(self.update_datetime)

@@ -3,5 +3,6 @@ from . import views #(from . )同ディレクトリ内のviews.pyをimport
 
 urlpatterns = [
     path('',views.index_func,name='index_aaa'),
+    path('post',views.post,name = 'post')
 ]#views.pyのdef index_funcを召喚。name = って何??
 #urlにname='index_aaa'のように名前を設定しておくと設定しているurlが変更になっても該当箇所は全部書き換えなくて済むとのこと。

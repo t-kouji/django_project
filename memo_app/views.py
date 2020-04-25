@@ -4,11 +4,12 @@ from django.views.generic import TemplateView
 from .models import *
 
 def index_func(aiueo):
+    memos = Memo.objects.all()
     params = {
-        'var':'Hello tanaka kouji'
+        'var':'Hello tanaka kouji',
+        'memos_': memos
     }
-    return render(aiueo,'index_.html',params)
-    #templatesディレクトリ内の"index_.html"ファイル
+    return render(aiueo,'index_.html',params) #templatesディレクトリ内の"index_.html"ファイル
     """
     Viewはテンプレートと混ぜて使用します。
     まずはHello Worldを表示させます。
