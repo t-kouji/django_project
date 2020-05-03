@@ -7,17 +7,28 @@
 </head>
 <body>
     <h1>{{var}}</h1> 
+
+    <div class="memo-form">
+      <h3>メモ内容</h3>
+      <form action="{% url 'post_aaa' %}" method="post">
+        {% csrf_token %}
+        <!-- ※{% csrf_token %}の部分はDjangoが生成する不正アクセス予防の為の値になります。
+            POSTリクエストを飛ばす際にはこれを書かないとエラーが出ます。 -->
+        <div class="text-memo">
+          {{ form_.content }}
+        </div>
+        <div class="post-form">
+            <input type="submit" value="登録" class="post-botton">
+        </div>
+      </form>
+    </div>
+  <div class="top_box">
     {% for memo in memos_ %}
     <div>
-        <p>{{memo.content}}</p>
-        <p>{{memo.update_datetime|date:"Y/m/d H:m:s"}}</p>
+      <p>{{ memo.content }}</p>
+      <p>{{ memo.update_datetime|date:"Y/m/d H:m:s" }}</p>
     </div>
     {% endfor %}
-
-    <div class='Memo_form'>
-        <h3>メモ内容</h3>
-
-
-    </div>
+  </div>
 </body>
 </html>
