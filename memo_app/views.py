@@ -4,12 +4,15 @@ from django.shortcuts import render, redirect
 # from django.views.generic import TemplateView
 from .forms import PostForm
 from .models import *
+from django.core.paginator import Paginator
 
-def index_func(aaaaa):
+def index_func(aaaaa,now_page=1):
     memos = Memo.objects.all()
+    page = Paginator(memos,3)
     params = {
         'var':'Hello tanaka kouji',
-        'memos_': memos,
+        'page':page.get_page(now_page),
+        # 'memos_': memos,
         'form_':PostForm()
         }
     return render(aaaaa,'index_.html',params) #templatesディレクトリ内の"index_.html"ファイル
