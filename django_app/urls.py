@@ -29,6 +29,9 @@ django_app/urls.pyの方でincludeを使い参照しています。
 'memo_app.urls'はmemo_appディレクトリ内のurls.pyという意味だと思う。
 """
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('memo_app.urls'))
+    path('admin/', admin.site.urls), #管理者画面に飛ぶ
+    path('',include('memo_app.urls')),
+    #path関数の第二引数がinclude関数の場合、入力されたurlリクエストがpath関数の第一引数
+    #（この場合''）から始まればマッチすると考える。
+    #includeを使っていてマッチしたらアプリ内のurls.pyにあるurlpatternsリストを探しに行く。
 ]

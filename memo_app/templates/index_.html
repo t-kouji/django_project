@@ -15,18 +15,30 @@
         <!-- ※{% csrf_token %}の部分はDjangoが生成する不正アクセス予防の為の値になります。
             POSTリクエストを飛ばす際にはこれを書かないとエラーが出ます。 -->
         <div class="text-memo">
-          {{ form_.content }}
+          {{ form_.content }}←テキストエリア
+          views.pyのindex_funcのparamの'form_'キーを参照
+          「変数名」.「キー名」 で「キー名」のcontentの部分はviews.pyのindex_funcのparamの'form_'のバリューである
+          PostForm()に渡される。PostForm()はforms.pyのclass PostForm(forms.ModelForm):を呼び出している。
+           ここのwidgets辞書のキーに'content'があり、そのバリューとして forms.Textareaがある。
         </div>
         <div class="post-form">
             <input type="submit" value="登録" class="post-botton">
         </div>
       </form>
     </div>
+    <form action="{% url 'set_record_number_n' %}" method="post">
+      {% csrf_token %}
+      <div class="slct01">
+          {{ record_number_form_.record_number }}       
+      </div>     
+    </form>
+
   <div class="top_box">
     {% for memo in page %}
     <div>
       <p>{{ memo.content }}</p>
       <p>{{ memo.update_datetime|date:"Y/m/d H:m:s" }}</p>
+      <br>
     </div>
     {% endfor %}
   </div>
@@ -35,7 +47,6 @@
     {% if page.has_previous %}
       <a href="{% url 'index_aaa' %}{{page.previous_page_number}}">前へ</a>
       {% endif %}
-
 
     {% for num in page.paginator.page_range %}
       {% if page.number == num %}
