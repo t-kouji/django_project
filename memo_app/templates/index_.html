@@ -8,6 +8,7 @@
 <body>
     <h1>{{var}}</h1> 
 
+    <!-- ここからテキストエリアの書き込みフォーム -->
     <div class="memo-form">
       <h3>メモ内容</h3>
       <form action="{% url 'post_aaa' %}" method="post">
@@ -26,28 +27,36 @@
         </div>
       </form>
     </div>
-    <form action="{% url 'set_record_number_n' %}" method="post">
+    <!-- ここまでテキストエリアの書き込みフォーム -->
+
+    <!-- ここから件数表示のフォーム -->
+            <!-- ↓どこのURLへ飛ばすか -->
+    <form action="{% url 'set_record_number_n' %}" method="post"> 
       {% csrf_token %}
       <div class="slct01">
+              <!-- ↓ブラウザ画面でどんなデザインにするか。 -->
           {{ record_number_form_.record_number }}       
       </div>     
     </form>
+    <!-- ここまで件数表示のフォーム -->
 
-  <div class="top_box">
-    {% for memo in page %}
-    <div>
-      <p>{{ memo.content }}</p>
-      <p>{{ memo.update_datetime|date:"Y/m/d H:m:s" }}</p>
-      <br>
+    <!-- ここから日付書き込み式 -->
+    <div class="top_box">
+      {% for memo in page %}
+        <div>
+          <p>{{ memo.content }}</p>
+          <p>{{ memo.update_datetime|date:"Y/m/d H:m:s" }}</p>
+          <br>
+        </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-
+    <!-- ここまで日付書き込み式 -->
+  
+  <!-- ここからページネーション -->
   <div class="pagination">
     {% if page.has_previous %}
       <a href="{% url 'index_aaa' %}{{page.previous_page_number}}">前へ</a>
       {% endif %}
-
     {% for num in page.paginator.page_range %}
       {% if page.number == num %}
         <span class ="current">{{ page.number}}</span>
@@ -59,6 +68,7 @@
       <a href="{% url 'index_aaa' %}{{page.next_page_number}}">次へ</a>
       {% endif %}
   </div>
+  <!-- ここまでページネーション -->
 
 </body>
 </html>

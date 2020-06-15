@@ -16,7 +16,7 @@ def hello_func(aiueo):
 urlpatterns = [
     path('hello/',hello_func), #このファイルurl.pyの関数hello_aaを呼ぶ（ビギ本P29）。本来はviews.pyの該当関数を呼ぶ。
     path('xyz/',views.xyz_func),
-    path('post', views.post, name='post_aaa'),
+    path('post', views.post_func, name='post_aaa'),
     path('<int:now_page>', views.index_func, name='no_meaning'),
     path('s_r_n', views.set_record_number_func, name='set_record_number_n'),
     path('s_o_o',views.set_order_option_func,name='set_order_option_n'),

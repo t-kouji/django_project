@@ -15,7 +15,7 @@ def index_func(aabbb,now_page=1):
     if 'record_number' in aabbb.session:
         record_number = aabbb.session['record_number'] 
     else:
-        record_number = 10
+        record_number = 8
     record_number_form = RecordNumberForm() #forms.pyのRecordNumberFormクラスをインスタンス化 
     record_number_form.initial = {'record_number':str(record_number)}
 
@@ -47,7 +47,7 @@ def index_func(aabbb,now_page=1):
     疑問："aaaaa"という引数をurls.pyで指定していないのになぜあるの？・・・⇒仮引数とのこと？？？
     """
 
-def post(bbbb):
+def post_func(bbbb):
     form = PostForm(bbbb.POST, instance=Memo())
     if form.is_valid():
         form.save()
