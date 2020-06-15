@@ -4,7 +4,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # from django.views.generic import TemplateView
-from .forms import PostForm, RecordNumberForm
+from .forms import PostForm, RecordNumberForm,ChoiceNewOldForm
 from .models import *
 from django.core.paginator import Paginator
 
@@ -15,9 +15,17 @@ def index_func(aabbb,now_page=1):
     if 'record_number' in aabbb.session:
         record_number = aabbb.session['record_number'] 
     else:
-        record_number = 8
+        record_number = 10
     record_number_form = RecordNumberForm() #forms.pyのRecordNumberFormクラスをインスタンス化 
     record_number_form.initial = {'record_number':str(record_number)}
+
+    """新着順or古い順"""
+    if 'new_old' in aabbb.session:
+        new_old = aabbb.session['new_old'] 
+    else:
+        new_old = 'new'
+    choice_new_old_form = ChoiceNewOldForm() #forms.pyのChoiceNewOldFormクラスをインスタンス化 
+    choice_new_old_form.initial = {'new_old':str(new_old)}
 
 
     """Viewでデータベースからデータを取得する"""
@@ -25,7 +33,10 @@ def index_func(aabbb,now_page=1):
     意味としては、Memoモデルに紐付くオブジェクトを全て取るという意味。
     全てじゃなくて、一部を取ることもできます。
     memos = Memo.objects.filter(取得したい属性=なんとかかんとか) """
-    memos = Memo.objects.all().order_by('update_datetime').reverse()
+    if 'new' in new_old:
+        memos = Memo.objects.all().order_by('update_datetime').reverse()
+    elif 'old' in new_old:
+        memos = Memo.objects.all().order_by('update_datetime')
     # page = Paginator(memos,3)
     page = Paginator(memos,record_number)
     params = {
@@ -34,6 +45,7 @@ def index_func(aabbb,now_page=1):
         # 'memos_': memos,
         'form_':PostForm(), #form.pyのclass PostForm(forms.ModelForm):を呼び出している
         'record_number_form_':record_number_form,
+        'choice_new_old_form_':choice_new_old_form,
         }
     return render(aabbb,'index_.html',params) #templatesディレクトリ内の"index_.html"ファイル
     """
@@ -90,7 +102,7 @@ def set_record_number_func(request):
     return redirect(to='/')
 
 def set_order_option_func(request):
-    """sessionが空なら"""
-    request.session['record_number'] = request.POST['record_number']
-    pass
+    request.session['new_old'] = request.POST['new_old']
+    return redirect(to='/')
+    
 

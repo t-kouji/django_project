@@ -17,10 +17,10 @@
             POSTリクエストを飛ばす際にはこれを書かないとエラーが出ます。 -->
         <div class="text-memo">
           {{ form_.content }}←テキストエリア
-          views.pyのindex_funcのparamの'form_'キーを参照
+          <!-- views.pyのindex_funcのparamの'form_'キーを参照
           「変数名」.「キー名」 で「キー名」のcontentの部分はviews.pyのindex_funcのparamの'form_'のバリューである
           PostForm()に渡される。PostForm()はforms.pyのclass PostForm(forms.ModelForm):を呼び出している。
-           ここのwidgets辞書のキーに'content'があり、そのバリューとして forms.Textareaがある。
+           ここのwidgets辞書のキーに'content'があり、そのバリューとして forms.Textareaがある。 -->
         </div>
         <div class="post-form">
             <input type="submit" value="登録" class="post-botton">
@@ -28,6 +28,17 @@
       </form>
     </div>
     <!-- ここまでテキストエリアの書き込みフォーム -->
+
+    <!-- ここから新着古い順の選択フォーム -->
+            <!-- ↓どこのURLへ飛ばすか -->
+    <form action="{% url 'set_order_option_n' %}" method="post"> 
+      {% csrf_token %}
+      <div class="slct01">
+              <!-- ↓ブラウザ画面でどんなデザインにするか。 -->
+          {{ choice_new_old_form_.new_old }}       
+      </div>     
+    </form>
+    <!-- ここまで新着古い順の選択フォーム -->
 
     <!-- ここから件数表示のフォーム -->
             <!-- ↓どこのURLへ飛ばすか -->

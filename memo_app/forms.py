@@ -44,7 +44,7 @@ CHOICE_NEW_OLD = (
     ('old', '古い順'),
 )
 class ChoiceNewOldForm(forms.Form):
-    hogehoge = forms.ChoiceField(
+    new_old = forms.ChoiceField(
         widget=forms.Select(attrs={'onchange': 'submit(this.form)'}), 
         choices=CHOICE_NEW_OLD ,
     )
