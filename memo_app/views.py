@@ -13,11 +13,14 @@ def index_func(aabbb,now_page=1):
     # if 'record_number' in aabbb.POST:
     #     record_number = aabbb.POST['record_number']
     if 'record_number' in aabbb.session:
+        print("--'record_number' in aabbb.session--")
         record_number = aabbb.session['record_number'] 
     else:
+        print("--'record_number'not in aabbb.session--")
         record_number = 10
-    record_number_form = RecordNumberForm() #forms.pyのRecordNumberFormクラスをインスタンス化 
+    record_number_form = RecordNumberForm() #forms.pyのRecordNumberFormクラスをインスタンス化
     record_number_form.initial = {'record_number':str(record_number)}
+    print("record_number_form.initial→",record_number_form.initial)
 
     """新着順or古い順"""
     if 'new_old' in aabbb.session:
@@ -83,9 +86,7 @@ def xyz_func(no_meaning):
         <a href="/"> 入力画面へ </a><br>
         <a href="/hello"> helloへ </a><br>
         注）本来はこのviews.pyにはhtmlは書かない(templateに書く)。
-    </nav>
-"""
-)
+    </nav>""")
 
 
 """表示件数変更機能をwebアプリを閉じるまで持ち回りたい値について、
@@ -95,6 +96,7 @@ def set_record_number_func(request):
     """set_record_numberメソッドを追加し、セッションに格納。 
     セッションとは一時保管場所みたいなもの。
     追加したメソッドを呼び出すurlをurls.pyに追加。"""
+    print("--------")
     print("request.session['record_number']",request.session['record_number'])
     print("request.POST['record_number']",request.POST['record_number'])
     request.session['record_number'] = request.POST['record_number']
@@ -102,7 +104,6 @@ def set_record_number_func(request):
     return redirect(to='/')
 
 def set_order_option_func(request):
+    print("--set_order_option_func(request):--")
     request.session['new_old'] = request.POST['new_old']
     return redirect(to='/')
-    
-

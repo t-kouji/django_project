@@ -22,6 +22,8 @@ DjangoがリクエストされたURLと照合するものです。
 """
 from django.contrib import admin
 from django.urls import path ,include
+from django.contrib.auth.decorators import login_required
+from decorator_include import decorator_include
 """
 基本的にdjango_app/urls.pyは簡潔なままにしておきます。
 その為、memo_app/urls.pyの内容を
@@ -30,8 +32,10 @@ django_app/urls.pyの方でincludeを使い参照しています。
 """
 urlpatterns = [
     path('admin/', admin.site.urls), #管理者画面に飛ぶ
-    path('',include('memo_app.urls')),
+    path('', decorator_include(login_required, include('memo_app.urls'))),#url単位でログイン状態を必須とするか設定できる
+    path('accounts/', include('allauth.urls')),
+    ]
     #path関数の第二引数がinclude関数の場合、入力されたurlリクエストがpath関数の第一引数
     #（この場合''）から始まればマッチすると考える。
     #includeを使っていてマッチしたらアプリ内のurls.pyにあるurlpatternsリストを探しに行く。
-]
+
